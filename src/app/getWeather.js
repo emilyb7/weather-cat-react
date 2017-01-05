@@ -1,5 +1,4 @@
 const Request = require('request');
-//const apiid = require('./config.js');
 const helpers = require('./helpers');
 const env = require('env2')('./config.env');
 const apiid = process.env.APIID;

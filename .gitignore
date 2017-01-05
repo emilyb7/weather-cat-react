@@ -49,3 +49,5 @@ jspm_packages
 config.js
 
 .DS_Store
+
+config.env

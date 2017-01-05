@@ -1,8 +1,11 @@
 const Request = require('request');
-const apiid = require('./config.js');
+//const apiid = require('./config.js');
 const helpers = require('./helpers');
+const env = require('env2')('./config.env');
+const apiid = process.env.APIID;
 
 const getWeather = (object, cb) => {
+  console.log(apiid);
   // object consists of location details -- lat, lon, city
   const url = `http://api.openweathermap.org/data/2.5/weather?lat=${object.lat}&lon=${object.lon}&units=metric&APPID=${apiid}`;
   Request(url, (err, response, body) => {

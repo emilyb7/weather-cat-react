@@ -6,7 +6,8 @@ const ContainerTitle = () => {
     marginTop: '3%',
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    height: '10%'
   };
 
   return (

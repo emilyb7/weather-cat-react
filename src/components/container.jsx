@@ -33,6 +33,18 @@ const Container = props => {
         <Image gif={props.details.gif}/>
         <WeatherDetails weather={props.details.weather}/>
         <Button location={props.details.location} reload={props.reload}/>
+        <footer>
+          <a
+            href="https://github.com/emilyb7/weather-cat-react"
+            target="blank"
+            >
+            <i
+              className="fa fa-github"
+              aria-hidden="true">
+            </i>
+            &nbsp;&nbsp;<span style={{textDecoration: "underline"}}>The Weather Cat</span>
+          </a>
+        </footer>
       </div>
     );
   }

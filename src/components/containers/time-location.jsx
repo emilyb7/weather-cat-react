@@ -8,7 +8,8 @@ const TimeLocation = (props) => {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: "space-around",
-    height: '3em'
+    height: '5%',
+    marginTop: '1%'
   };
 
   return (

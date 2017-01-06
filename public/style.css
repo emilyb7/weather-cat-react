@@ -19,6 +19,15 @@ body {
   display: flex;
 }
 
+a, a i {
+  color: #777;
+  text-decoration: none;
+}
+
+a:hover, a i:hover {
+  color: #333;
+}
+
 .titleish {
   margin: 2%;
   width: 80%;
@@ -67,6 +76,6 @@ img:hover {
   html {
     font-size: 0.8em;
    }
-  h1 { font-size: 2.5em; }
-  .details__temp { font-size: 2.5em; }
+  h1 { font-size: 2em; }
+  .details__temp { font-size: 2em; }
 }

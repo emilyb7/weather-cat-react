@@ -21671,7 +21671,27 @@
 	      _react2.default.createElement(_timeLocation2.default, { location: props.details.location }),
 	      _react2.default.createElement(_image2.default, { gif: props.details.gif }),
 	      _react2.default.createElement(_weatherDetails2.default, { weather: props.details.weather }),
-	      _react2.default.createElement(_button2.default, { location: props.details.location, reload: props.reload })
+	      _react2.default.createElement(_button2.default, { location: props.details.location, reload: props.reload }),
+	      _react2.default.createElement(
+	        'footer',
+	        null,
+	        _react2.default.createElement(
+	          'a',
+	          {
+	            href: 'https://github.com/emilyb7/weather-cat-react',
+	            target: 'blank'
+	          },
+	          _react2.default.createElement('i', {
+	            className: 'fa fa-github',
+	            'aria-hidden': 'true' }),
+	          '\xA0\xA0',
+	          _react2.default.createElement(
+	            'span',
+	            { style: { textDecoration: "underline" } },
+	            'The Weather Cat'
+	          )
+	        )
+	      )
 	    );
 	  }
 	};
@@ -21700,7 +21720,8 @@
 	    marginTop: '3%',
 	    display: 'flex',
 	    flexWrap: 'wrap',
-	    justifyContent: 'center'
+	    justifyContent: 'center',
+	    height: '10%'
 	  };
 
 	  return _react2.default.createElement(
@@ -21746,7 +21767,8 @@
 	    display: 'flex',
 	    flexDirection: 'row',
 	    justifyContent: "space-around",
-	    height: '3em'
+	    height: '5%',
+	    marginTop: '1%'
 	  };
 
 	  return _react2.default.createElement(
@@ -21882,7 +21904,7 @@
 	  var imgSrc = props.gif;
 
 	  var containerStyle = {
-	    height: '20em',
+	    height: '45%',
 	    display: 'flex',
 	    alignItems: 'center'
 	  };

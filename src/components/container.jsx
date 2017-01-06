@@ -7,6 +7,8 @@ import Button from './containers/button.jsx';
 
 const Container = props => {
 
+  console.log(props);
+
   const containerStyle = {
     width: '90vw',
     maxWidth: 650,

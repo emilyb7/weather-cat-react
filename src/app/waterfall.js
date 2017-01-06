@@ -19,8 +19,8 @@ const waterfall = (args, tasks, cb) => {
   return cb(null, args)
 };
 
-const land = (cb) => {
-  waterfall(null, [ipRequest, getWeather, getGiphy, backgroundColors], (err, result) => {
+const land = (location, cb) => {
+  waterfall(location, [getWeather, getGiphy, backgroundColors], (err, result) => {
     if (err) console.log(err);
     else cb(null, result);
   });

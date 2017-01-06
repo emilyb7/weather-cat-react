@@ -6,22 +6,36 @@ import fade from './fade.js';
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {location: '', weather: {}};
+    this.state = {location: null, weather: {}};
     this.getDetails();
   }
-  getDetails() {
-    makeRequest('/land', (err, response) => {
-      if (err) console.log(err);
-      const xhrResponse = JSON.parse(response);
-      this.setState({
-        location: xhrResponse.location,
-        weather: xhrResponse.weather,
-        gif: xhrResponse.gif
-      });
-      Container();
-      let backgroundColors = `linear-gradient(${xhrResponse.colors.topColor},${xhrResponse.colors.bottomoColor})`;
-      document.querySelector('#app').style.background = backgroundColors;
-    })
+  getDetails () {
+      makeRequest('https://freegeoip.net/json/', (err, response) => {
+        if (err) console.log(err);
+        const xhrResponse = JSON.parse(response);
+        const location = {
+          city: xhrResponse.city,
+          lat: xhrResponse.latitude,
+          lon: xhrResponse.longitude
+        }
+        this.setState({
+          location: location,
+          weather: {}
+        });
+        let url = `/land?city=${location.city}&lat=${location.lat}&lon=${location.lon}`;
+        makeRequest(url, (err, response) => {
+          if (err) console.log(err);
+          const serverResponse = JSON.parse(response);
+          this.setState({
+            location: location,
+            weather: serverResponse.weather,
+            gif: serverResponse.gif
+          });
+          Container();
+          let backgroundColors = `linear-gradient(${serverResponse.colors.topColor},${serverResponse.colors.bottomoColor})`;
+          document.querySelector('#app').style.background = backgroundColors;
+        })
+      })
   }
 
   render() {
@@ -45,7 +59,6 @@ class App extends React.Component {
               weather: xhrResponse.weather,
               gif: xhrResponse.gif
             });
-            //fade.fadeIn(container);
           })
         }}
       />
@@ -53,14 +66,16 @@ class App extends React.Component {
   }
 
     componentWillUpdate() {
-      const container = document.querySelector('.main-container');
-      let url = document.querySelector('img').src;
-      let timer = window.setInterval((url) => {
-        if (url !== document.querySelector('img').src) {
-          fade.fadeIn(container);
-          clearInterval(timer);
-        }
-      }, 10);
+      if (document.querySelector('img')) {
+        const container = document.querySelector('.main-container');
+        let url = document.querySelector('img').src || '';
+        let timer = window.setInterval((url) => {
+          if (url !== document.querySelector('img').src) {
+            fade.fadeIn(container);
+            clearInterval(timer);
+          }
+        }, 10);
+      }
     }
 }
 

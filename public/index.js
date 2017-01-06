@@ -21519,7 +21519,7 @@
 
 	    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
-	    _this.state = { location: '', weather: {} };
+	    _this.state = { location: null, weather: {} };
 	    _this.getDetails();
 	    return _this;
 	  }
@@ -21529,17 +21529,31 @@
 	    value: function getDetails() {
 	      var _this2 = this;
 
-	      (0, _makeRequest2.default)('/land', function (err, response) {
+	      (0, _makeRequest2.default)('https://freegeoip.net/json/', function (err, response) {
 	        if (err) console.log(err);
 	        var xhrResponse = JSON.parse(response);
+	        var location = {
+	          city: xhrResponse.city,
+	          lat: xhrResponse.latitude,
+	          lon: xhrResponse.longitude
+	        };
 	        _this2.setState({
-	          location: xhrResponse.location,
-	          weather: xhrResponse.weather,
-	          gif: xhrResponse.gif
+	          location: location,
+	          weather: {}
 	        });
-	        (0, _container2.default)();
-	        var backgroundColors = 'linear-gradient(' + xhrResponse.colors.topColor + ',' + xhrResponse.colors.bottomoColor + ')';
-	        document.querySelector('#app').style.background = backgroundColors;
+	        var url = '/land?city=' + location.city + '&lat=' + location.lat + '&lon=' + location.lon;
+	        (0, _makeRequest2.default)(url, function (err, response) {
+	          if (err) console.log(err);
+	          var serverResponse = JSON.parse(response);
+	          _this2.setState({
+	            location: location,
+	            weather: serverResponse.weather,
+	            gif: serverResponse.gif
+	          });
+	          (0, _container2.default)();
+	          var backgroundColors = 'linear-gradient(' + serverResponse.colors.topColor + ',' + serverResponse.colors.bottomoColor + ')';
+	          document.querySelector('#app').style.background = backgroundColors;
+	        });
 	      });
 	    }
 	  }, {
@@ -21566,7 +21580,6 @@
 	              weather: xhrResponse.weather,
 	              gif: xhrResponse.gif
 	            });
-	            //fade.fadeIn(container);
 	          });
 	        }
 	      });
@@ -21574,14 +21587,18 @@
 	  }, {
 	    key: 'componentWillUpdate',
 	    value: function componentWillUpdate() {
-	      var container = document.querySelector('.main-container');
-	      var url = document.querySelector('img').src;
-	      var timer = window.setInterval(function (url) {
-	        if (url !== document.querySelector('img').src) {
-	          _fade2.default.fadeIn(container);
-	          clearInterval(timer);
-	        }
-	      }, 10);
+	      if (document.querySelector('img')) {
+	        (function () {
+	          var container = document.querySelector('.main-container');
+	          var url = document.querySelector('img').src || '';
+	          var timer = window.setInterval(function (url) {
+	            if (url !== document.querySelector('img').src) {
+	              _fade2.default.fadeIn(container);
+	              clearInterval(timer);
+	            }
+	          }, 10);
+	        })();
+	      }
 	    }
 	  }]);
 
@@ -21627,6 +21644,8 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var Container = function Container(props) {
+
+	  console.log(props);
 
 	  var containerStyle = {
 	    width: '90vw',
@@ -21744,7 +21763,7 @@
 /* 182 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -21758,25 +21777,27 @@
 
 	var Location = function Location(props) {
 
-	  var cityName = props.location.city;
+	  var cityName = '';
+
+	  if (props.location) cityName = props.location.city;
 
 	  return _react2.default.createElement(
-	    "div",
-	    { className: "time-location__location time-location__inner" },
+	    'div',
+	    { className: 'time-location__location time-location__inner' },
 	    _react2.default.createElement(
-	      "p",
-	      { className: "detailsLocation" },
-	      _react2.default.createElement("i", { className: "fa fa-map-marker", "aria-hidden": "true" }),
+	      'p',
+	      { className: 'detailsLocation' },
+	      _react2.default.createElement('i', { className: 'fa fa-map-marker', 'aria-hidden': 'true' }),
 	      _react2.default.createElement(
-	        "strong",
+	        'strong',
 	        null,
-	        "\xA0Location:"
+	        '\xA0Location:'
 	      ),
-	      _react2.default.createElement("br", null),
-	      "\xA0\xA0",
+	      _react2.default.createElement('br', null),
+	      '\xA0\xA0',
 	      _react2.default.createElement(
-	        "span",
-	        { id: "city" },
+	        'span',
+	        { id: 'city' },
 	        cityName
 	      )
 	    )

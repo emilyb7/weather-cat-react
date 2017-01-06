@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 
 const Location = (props) => {
 
+  let cityName = '';
 
-  const cityName = props.location.city;
+  if (props.location) cityName = props.location.city;
 
   return (
     <div className="time-location__location time-location__inner">

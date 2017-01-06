@@ -22,7 +22,15 @@ module.exports = [
     method: 'GET',
     path: '/land',
     handler: (request, reply) => {
-      waterfall.land((err, data) => {
+      let city = request.query.city;
+      let lat = request.query.lat;
+      let lon = request.query.lon;
+      console.log(city, lat, lon);
+      waterfall.land({
+        city: city,
+        lat: lat,
+        lon: lon
+      }, (err, data) => {
         if (err) {
           console.log(err);
           return;
@@ -41,7 +49,7 @@ module.exports = [
       waterfall.update({
         lat: lat,
         lon: lon
-      },(err, data) => {
+      }, (err, data) => {
         if (err) {
           console.log(err);
           return;

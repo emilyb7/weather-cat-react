@@ -4,7 +4,7 @@ const Image = (props) => {
   const imgSrc = props.gif;
 
   const containerStyle = {
-    height: '45%',
+    //height: '45%',
     display: 'flex',
     alignItems: 'center'
   }
@@ -12,7 +12,7 @@ const Image = (props) => {
   const imgStyle = {
     margin: 'auto',
     maxWidth: '90%',
-    maxHeight: '95%',
+    maxHeight: '45vh',
     alignSelf: 'center',
     cursor: 'pointer'
   }

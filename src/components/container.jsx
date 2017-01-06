@@ -7,8 +7,6 @@ import Button from './containers/button.jsx';
 
 const Container = props => {
 
-  console.log(props);
-
   const containerStyle = {
     width: '90vw',
     maxWidth: 650,
@@ -19,11 +17,10 @@ const Container = props => {
     backgroundColor: 'RGBA(200, 200, 200, 0.6)',
     display: 'flex',
     flexDirection: 'column',
-    flexWrap: 'wrap',
+    //flexWrap: 'wrap',
     justifyContent: 'space-around',
     boxShadow: '0 0 10px #333',
-    opacity: 0,
-    zIndex: 0
+    opacity: 0
   }
   if (props) {
     return (

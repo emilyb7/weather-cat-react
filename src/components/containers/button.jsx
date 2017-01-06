@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 const Button = (props) => {
 
   const containerStyle = {
-    height: '4em',
+    height: '12%',
     marginTop: '1em',
     marginBottom: '1em',
     display: 'flex',

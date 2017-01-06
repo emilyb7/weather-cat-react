@@ -7,12 +7,12 @@ const WeatherDetails = (props) => {
   const containerStyle = {
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-around',
-    height: '20%'
+    justifyContent: 'center',
+    height: '15%'
   };
 
   return (
-    <div className="container_details">
+    <div className="container_details" style={containerStyle}>
       <p className="details__temp" style={{fontSize: '2em', margin:0}}>
         <i className="fa fa-thermometer-half" aria-hidden="true"></i>
         &nbsp;

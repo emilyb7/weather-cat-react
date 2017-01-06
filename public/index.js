@@ -21645,8 +21645,6 @@
 
 	var Container = function Container(props) {
 
-	  console.log(props);
-
 	  var containerStyle = {
 	    width: '90vw',
 	    maxWidth: 650,
@@ -21657,11 +21655,10 @@
 	    backgroundColor: 'RGBA(200, 200, 200, 0.6)',
 	    display: 'flex',
 	    flexDirection: 'column',
-	    flexWrap: 'wrap',
+	    //flexWrap: 'wrap',
 	    justifyContent: 'space-around',
 	    boxShadow: '0 0 10px #333',
-	    opacity: 0,
-	    zIndex: 0
+	    opacity: 0
 	  };
 	  if (props) {
 	    return _react2.default.createElement(
@@ -21720,8 +21717,8 @@
 	    marginTop: '3%',
 	    display: 'flex',
 	    flexWrap: 'wrap',
-	    justifyContent: 'center',
-	    height: '10%'
+	    justifyContent: 'center'
+	    //height: '10%'
 	  };
 
 	  return _react2.default.createElement(
@@ -21904,7 +21901,7 @@
 	  var imgSrc = props.gif;
 
 	  var containerStyle = {
-	    height: '45%',
+	    //height: '45%',
 	    display: 'flex',
 	    alignItems: 'center'
 	  };
@@ -21912,7 +21909,7 @@
 	  var imgStyle = {
 	    margin: 'auto',
 	    maxWidth: '90%',
-	    maxHeight: '95%',
+	    maxHeight: '45vh',
 	    alignSelf: 'center',
 	    cursor: 'pointer'
 	  };
@@ -21967,13 +21964,13 @@
 	  var containerStyle = {
 	    display: 'flex',
 	    flexDirection: 'column',
-	    justifyContent: 'space-around',
-	    height: '20%'
+	    justifyContent: 'center',
+	    height: '15%'
 	  };
 
 	  return _react2.default.createElement(
 	    'div',
-	    { className: 'container_details' },
+	    { className: 'container_details', style: containerStyle },
 	    _react2.default.createElement(
 	      'p',
 	      { className: 'details__temp', style: { fontSize: '2em', margin: 0 } },
@@ -22015,7 +22012,7 @@
 	var Button = function Button(props) {
 
 	  var containerStyle = {
-	    height: '4em',
+	    height: '12%',
 	    marginTop: '1em',
 	    marginBottom: '1em',
 	    display: 'flex',

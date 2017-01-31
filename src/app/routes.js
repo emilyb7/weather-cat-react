@@ -22,10 +22,11 @@ module.exports = [
     method: 'GET',
     path: '/land',
     handler: (request, reply) => {
+      var ip = request.headers['x-forwarded-for'] || request.info.remoteAddress;
+      console.log('IP: ' + ip);
       let city = request.query.city;
       let lat = request.query.lat;
       let lon = request.query.lon;
-      console.log(city, lat, lon);
       waterfall.land({
         city: city,
         lat: lat,

@@ -24,7 +24,7 @@ class App extends React.Component {
         });
         let url = `/land?city=${location.city}&lat=${location.lat}&lon=${location.lon}`;
         makeRequest(url, (err, response) => {
-          if (err) console.log(err);
+          if (err) ^.log(err);
           const serverResponse = JSON.parse(response);
           this.setState({
             location: location,

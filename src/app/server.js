@@ -1,11 +1,7 @@
 'use strict';
 
 const Hapi = require('hapi');
-const Path = require('path');
 const Inert = require('inert');
-const Vision = require('vision');
-const Server = new Hapi.Server();
-const routes = require('./routes.js');
 const env2 = require('env2');
 
 env2('./config.env');

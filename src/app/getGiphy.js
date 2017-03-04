@@ -7,7 +7,7 @@ const getGiphy = (obj, cb) => {
     if (error) { cb(error); }
     else {
       let apiResponse = JSON.parse(body);
-      let gif = apiResponse.data.image_url;
+      let gif = apiResponse.data.image_url.replace(/^http/, "https");
       let responseObject = {
         location: obj.location,
         weather: obj.weather,

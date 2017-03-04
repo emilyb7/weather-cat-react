@@ -7,7 +7,7 @@ var filesToCache = [
 ];
 
 var locationCacheName = 'locationData-v1';
-var landCacheName = 'faData-v1';
+var landCacheName = 'landData-v1';
 
 
 self.addEventListener('install', function(e) {

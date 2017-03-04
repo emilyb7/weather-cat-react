@@ -2,7 +2,7 @@ const Request = require('request');
 
 const getGiphy = (obj, cb) => {
   const keywords = `${obj.weather.type.split(' ').pop()} cat`;
-  const url = `http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=${keywords}`;
+  const url = `https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=${keywords}`;
   Request(url, (error, response, body) => {
     if (error) { cb(error); }
     else {

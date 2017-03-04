@@ -6,33 +6,36 @@ import fade from './fade.js';
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {location: null, weather: {}};
+    this.state = { location: null, weather: {}, };
     this.getDetails();
   }
+
   getDetails () {
       makeRequest('https://freegeoip.net/json/', (err, response) => {
-        if (err) console.log(err);
+        if (err) console.log(err, "unable to access location");
         const xhrResponse = JSON.parse(response);
         const location = {
           city: xhrResponse.city,
           lat: xhrResponse.latitude,
-          lon: xhrResponse.longitude
+          lon: xhrResponse.longitude,
         }
-        this.setState({
-          location: location,
-          weather: {}
-        });
-        let url = `/land?city=${location.city}&lat=${location.lat}&lon=${location.lon}`;
+
+        this.setState({ location: location, weather: {}});
+
+        const url = `/land?city=${location.city}&lat=${location.lat}&lon=${location.lon}`;
+
         makeRequest(url, (err, response) => {
-          if (err) ^.log(err);
+          if (err) console.log(err, "unable to fetch details for your location");
           const serverResponse = JSON.parse(response);
           this.setState({
             location: location,
             weather: serverResponse.weather,
-            gif: serverResponse.gif
+            gif: serverResponse.gif,
           });
+
           Container();
-          let backgroundColors = `linear-gradient(${serverResponse.colors.topColor},${serverResponse.colors.bottomoColor})`;
+
+          const backgroundColors = `linear-gradient(${serverResponse.colors.topColor},${serverResponse.colors.bottomoColor})`;
           document.querySelector('#app').style.background = backgroundColors;
         })
       })
@@ -57,7 +60,7 @@ class App extends React.Component {
             this.setState({
               location: location,
               weather: xhrResponse.weather,
-              gif: xhrResponse.gif
+              gif: xhrResponse.gif,
             });
           })
         }}

@@ -21530,27 +21530,29 @@
 	      var _this2 = this;
 
 	      (0, _makeRequest2.default)('https://freegeoip.net/json/', function (err, response) {
-	        if (err) console.log(err);
+	        if (err) console.log(err, "unable to access location");
 	        var xhrResponse = JSON.parse(response);
 	        var location = {
 	          city: xhrResponse.city,
 	          lat: xhrResponse.latitude,
 	          lon: xhrResponse.longitude
 	        };
-	        _this2.setState({
-	          location: location,
-	          weather: {}
-	        });
+
+	        _this2.setState({ location: location, weather: {} });
+
 	        var url = '/land?city=' + location.city + '&lat=' + location.lat + '&lon=' + location.lon;
+
 	        (0, _makeRequest2.default)(url, function (err, response) {
-	          if (err) console.log(err);
+	          if (err) console.log(err, "unable to fetch details for your location");
 	          var serverResponse = JSON.parse(response);
 	          _this2.setState({
 	            location: location,
 	            weather: serverResponse.weather,
 	            gif: serverResponse.gif
 	          });
+
 	          (0, _container2.default)();
+
 	          var backgroundColors = 'linear-gradient(' + serverResponse.colors.topColor + ',' + serverResponse.colors.bottomoColor + ')';
 	          document.querySelector('#app').style.background = backgroundColors;
 	        });

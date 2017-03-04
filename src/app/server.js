@@ -10,26 +10,15 @@ const env2 = require('env2');
 
 env2('./config.env');
 
-Server.connection({
-  port: process.env.PORT || 3000,
-  routes: {
-    files: {
-      relativeTo: Path.join(__dirname, '../../public')
-    }
-  }
+const server = new Hapi.Server();
+
+
+server.register([Inert], (err) => {
+
+  server.connection({ port: process.env.PORT || 3000, });
+
+  server.route(require('./routes.js'));
+
+  server.start(() => { console.log((`Server running at: ${server.info.uri}`)); })
+
 });
-
-Server.register([Inert, Vision], (err) => {
-  if (err) console.log(err);
-  Server.views({
-    engines: {
-      html: require('handlebars')
-    },
-    relativeTo: __dirname,
-    path: '../../'
-  });
-
-  Server.route(routes);
-});
-
-module.exports = Server;

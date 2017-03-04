@@ -1,3 +1,5 @@
+const waterfall = require('./waterfall.js');
+
 module.exports = (request, reply) => {
   const lat = request.query.lat;
   const lon = request.query.lon;

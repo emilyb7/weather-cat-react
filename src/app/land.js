@@ -14,6 +14,7 @@ module.exports = (request, reply) => {
       console.log(err);
       return;
     } else {
+      console.log(data);
       reply(data);
     }
   });

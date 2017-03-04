@@ -21530,32 +21530,57 @@
 	      var _this2 = this;
 
 	      (0, _makeRequest2.default)('https://freegeoip.net/json/', function (err, response) {
-	        if (err) console.log(err, "unable to access location");
-	        var xhrResponse = JSON.parse(response);
-	        var location = {
-	          city: xhrResponse.city,
-	          lat: xhrResponse.latitude,
-	          lon: xhrResponse.longitude
-	        };
-
-	        _this2.setState({ location: location, weather: {} });
-
-	        var url = '/land?city=' + location.city + '&lat=' + location.lat + '&lon=' + location.lon;
-
-	        (0, _makeRequest2.default)(url, function (err, response) {
-	          if (err) console.log(err, "unable to fetch details for your location");
-	          var serverResponse = JSON.parse(response);
-	          _this2.setState({
-	            location: location,
-	            weather: serverResponse.weather,
-	            gif: serverResponse.gif
-	          });
-
+	        if (err) {
+	          if ('caches' in window) {
+	            caches.match("/land").then(function (response) {
+	              if (response) {
+	                response.json().then(function updateFromCache(data) {
+	                  this.setState({
+	                    location: location,
+	                    weather: serverResponse.weather,
+	                    gif: serverResponse.gif
+	                  });
+	                  var backgroundColors = 'linear-gradient(' + data.colors.topColor + ',' + data.colors.bottomoColor + ')';
+	                  document.querySelector('#app').style.background = backgroundColors;
+	                });
+	              }
+	            });
+	          }
 	          (0, _container2.default)();
 
-	          var backgroundColors = 'linear-gradient(' + serverResponse.colors.topColor + ',' + serverResponse.colors.bottomoColor + ')';
-	          document.querySelector('#app').style.background = backgroundColors;
-	        });
+	          return;
+	        } else {
+	          (function () {
+	            var xhrResponse = JSON.parse(response);
+	            var location = {
+	              city: xhrResponse.city,
+	              lat: xhrResponse.latitude,
+	              lon: xhrResponse.longitude
+	            };
+
+	            var url = '/land?city=' + location.city + '&lat=' + location.lat + '&lon=' + location.lon;
+
+	            (0, _makeRequest2.default)(url, function (err, response) {
+	              var serverResponse = void 0;
+	              if (err) {
+	                console.log(err, "unable to fetch details for your location");
+	                return;
+	              } else {
+	                serverResponse = JSON.parse(response);
+	                _this2.setState({
+	                  location: location,
+	                  weather: serverResponse.weather,
+	                  gif: serverResponse.gif
+	                });
+	              }
+
+	              (0, _container2.default)();
+
+	              var backgroundColors = 'linear-gradient(' + serverResponse.colors.topColor + ',' + serverResponse.colors.bottomoColor + ')';
+	              document.querySelector('#app').style.background = backgroundColors;
+	            });
+	          })();
+	        }
 	      });
 	    }
 	  }, {
@@ -22063,18 +22088,42 @@
 	  value: true
 	});
 	var makeRequest = function makeRequest(url, cb) {
-	  var httpRequest = new XMLHttpRequest();
-	  if (!httpRequest) {
-	    alert('Giving up :( Cannot create an XMLHTTP instance');
-	    return false;
+
+	  if ('caches' in window) {
+	    caches.match(url).then(function (response) {
+	      if (response) {
+	        response.json().then(function updateFromCache(data) {
+	          cb(null, JSON.stringify(data));
+	        });
+	      }
+	    });
 	  }
+
+	  var httpRequest = new XMLHttpRequest();
+
 	  httpRequest.onreadystatechange = function () {
+
 	    if (httpRequest.readyState === XMLHttpRequest.DONE) {
 	      if (httpRequest.status === 200) {
 	        cb(null, httpRequest.responseText);
+	        return;
+	      } else if ('caches' in window) {
+	        caches.match(url).then(function (response) {
+	          if (response) {
+	            response.json().then(function updateFromCache(data) {
+	              cb(null, JSON.stringify(data));
+	              return;
+	            });
+	          } else {
+	            cb("no matching file in cache");
+	          }
+	        });
 	      } else {
-	        cb('There was a problem with the request.');
+	        cb("no cached data at all");
+	        return;
 	      }
+	    } else {
+	      cb("waiting for response from server...");
 	    }
 	  };
 	  httpRequest.open('GET', url);
